@@ -51,8 +51,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 const login = async (email: string, password: string) => {
   try {
-     const response = await axios.post(`${API_URL}/api/login`, { email, password });
-
+     // AuthContext.tsx
+const response = await axios.post(`${API_URL}/api/login`, { email, password });
     const { token: authToken, userId, nombre, rol } = response.data;
 
     setToken(authToken);
