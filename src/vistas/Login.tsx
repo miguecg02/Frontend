@@ -3,6 +3,7 @@ import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import './Login.css';
+import { API_URL } from "../config";
 
 const Login = () => {
   const [email, setEmail] = useState('');
