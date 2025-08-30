@@ -13,7 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
-     console.log("API_URL desde env:", import.meta.env.VITE_API_URL);
+     console.log("API_URL desde env.production:", import.meta.env.VITE_API_URL);
     e.preventDefault();
     
     setError(null);

@@ -1,6 +1,7 @@
 // AuthContext.tsx
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
+require('dotenv').config();
 import { API_URL } from "./config";
 import axios from "axios";
 interface UserData {
