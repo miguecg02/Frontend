@@ -5,7 +5,7 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://backend-production-a7da.up.railway.app/api/:splat"
+  to = "https://backend-production-a7da.up.railway.app/:splat"
   status = 200
   force = true
 
@@ -17,4 +17,4 @@
 
 [context.production.environment]
   NODE_VERSION = "18"
-  VITE_API_URL = "https://backend-production-a7da.up.railway.app"calhost:5173"
+  VITE_API_URL = "https://backend-production-a7da.up.railway.app"
