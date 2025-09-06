@@ -601,16 +601,13 @@ const DateField: React.FC<DateFieldProps> = ({ name, formData, setFormData }) =>
 const FormularioDesaparecida: React.FC = () => {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, token } = useAuth(); 
 
   const fetchNacionalidades = async () => {
   try {
     const response = await fetch(`${API_URL}/api/personas/naciones/listado`);
     const data = await response.json();
-    return data.map((nacion: any) => ({
-      value: nacion.idNacionalidad,
-      label: nacion.nacionalidad
-    }));
+    return data;
   } catch (error) {
     console.error('Error al cargar nacionalidades:', error);
     return [];
@@ -620,12 +617,20 @@ const FormularioDesaparecida: React.FC = () => {
 const fetchEstados = useCallback(async (): Promise<{value:string;label:string;}[]> => {
   if (formData.PaisDestino === 'México') {
     // llama a tu API de entidades
-    const res = await fetch(`${API_URL}/api/personas/entidades/listado?idNacionalidad=1`);
+    const res = await fetch(`${API_URL}/api/personas/entidades/listado?idNacionalidad=1`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
     const data: { nombre: string }[] = await res.json();
     return data.map(e => ({ value: e.nombre, label: e.nombre }));
   }
   if (formData.PaisDestino === 'Estados Unidos') {
-    const res = await fetch(`${API_URL}/api/personas/entidades/listado?idNacionalidad=2`);
+    const res = await fetch(`${API_URL}/api/personas/entidades/listado?idNacionalidad=2`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
     const data: { nombre: string }[] = await res.json();
     return data.map(e => ({ value: e.nombre, label: e.nombre }));
   }
@@ -649,12 +654,20 @@ const fetchEstados = useCallback(async (): Promise<{value:string;label:string;}[
 
  const fetchLocalidades = useCallback(async (): Promise<{value:string;label:string;}[]> => {
   if (formData.PaisDestino === 'México') {
-    const res = await fetch(`${API_URL}/api/personas/municipios/listado?idNacionalidad=1`);
+    const res = await fetch(`${API_URL}/api/personas/municipios/listado?idNacionalidad=1`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
     const data: { nombre: string }[] = await res.json();
     return data.map(e => ({ value: e.nombre, label: e.nombre }));
   }
   if (formData.PaisDestino === 'Estados Unidos') {
-    const res = await fetch(`${API_URL}/api/personas/municipios/listado?idNacionalidad=2`);
+    const res = await fetch(`${API_URL}/api/personas/municipios/listado?idNacionalidad=2`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
     const data: { nombre: string }[] = await res.json();
     return data.map(e => ({ value: e.nombre, label: e.nombre }));
   }
@@ -663,7 +676,11 @@ const fetchEstados = useCallback(async (): Promise<{value:string;label:string;}[
 
 const fetchLocalidadesPerdidaContacto = useCallback(async (): Promise<{value:string;label:string;}[]> => {
   if (formData.PaisPerdidaContacto === 'México' && formData.EstadoPerdidaContacto) {
-    const res = await fetch(`${API_URL}/api/personas/municipios/listado?idNacionalidad=1&entidad=${encodeURIComponent(formData.EstadoPerdidaContacto)}`);
+    const res = await fetch(`${API_URL}/api/personas/municipios/listado?idNacionalidad=1&entidad=${encodeURIComponent(formData.EstadoPerdidaContacto)}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
     const data: { nombre: string }[] = await res.json();
     return data.map(e => ({ value: e.nombre, label: e.nombre }));
   }
@@ -691,12 +708,20 @@ const fetchLocalidadesPerdidaContacto = useCallback(async (): Promise<{value:str
   const fetchEstadosPerdidaContacto = useCallback(async (): Promise<{value:string;label:string;}[]> => {
   if (formData.PaisPerdidaContacto === 'México') {
     // llama a tu API de entidades
-    const res = await fetch(`${API_URL}/api/personas/entidades/listado?idNacionalidad=1`);
+    const res = await fetch(`${API_URL}/api/personas/entidades/listado?idNacionalidad=1`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
     const data: { nombre: string }[] = await res.json();
     return data.map(e => ({ value: e.nombre, label: e.nombre }));
   }
   if (formData.PaisPerdidaContacto === 'Estados Unidos') {
-    const res = await fetch(`${API_URL}/api/personas/entidades/listado?idNacionalidad=2`);
+    const res = await fetch(`${API_URL}/api/personas/entidades/listado?idNacionalidad=2`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
     const data: { nombre: string }[] = await res.json();
     return data.map(e => ({ value: e.nombre, label: e.nombre }));
   }
@@ -739,7 +764,9 @@ const fetchLocalidadesPerdidaContacto = useCallback(async (): Promise<{value:str
     const resCheck = await fetch(`${API_URL}/api/personas?Nombre=${encodeURIComponent(formData.Nombre)}&PrimerApellido=${encodeURIComponent(formData.PrimerApellido)}`, {
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+         'Authorization': `Bearer ${token}`
+        
       }
     });
 
@@ -770,7 +797,8 @@ const fetchLocalidadesPerdidaContacto = useCallback(async (): Promise<{value:str
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(dataToSend)
     });
